@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+    <html>
+      <head>
+        <title>ToDo List App</title>
+        <style>
+          /* スタイルを定義 */
+          body {
+            font-family: Arial, Helvetica, sans-serif;
+          }
+    
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #ddd;
+          }
+    
+          h1 {
+            text-align: center;
+          }
+    
+          form {
+            display: flex;
+            margin-bottom: 20px;
+          }
+    
+          input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+          }
+    
+          input[type="submit"] {
+            background-color: #FF5733 ;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+          }
+    
+          ul {
+            list-style: none;
+            padding: 0;
+          }
+    
+          li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+          }
+    
+          li:last-child {
+            border-bottom: none;
+          }
+    
+          .delete-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Todoist</h1>
+          <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new task...">
+            <input type="submit" value="Add">
+          </form>
+          <ul id="todo-list"></ul>
+        </div>
+
+        <script>
+          // フォームとリストを取得
+          const todoForm = document.getElementById("todo-form");
+          const todoList = document.getElementById("todo-list");
+    
+          // フォームが送信されたときに実行する関数を定義
+          function addTodoItem(event) {
+            // ページのリロードを防止
+            event.preventDefault();
+    
+            // 入力フィールドと値を取得
+            const todoInput = document.getElementById("todo-input");
+            const todoText = todoInput.value.trim();
+    
+            // 入力が空でない場合
+            if (todoText !== "") {
+              // 新しいToDoアイテムを作成
+              const todoItem = document.createElement("li");
+    
+              // ToDoテキストを表示する要素を作成
+              const todoTextElement = document.createElement("span");
+              todoTextElement.innerText = todoText;
+    
+              // 削除ボタンを作成
+              const deleteButton = document.createElement("button");
+              deleteButton.innerText = "Delete";
+              deleteButton.classList.add("delete-btn");
+    
+              // 削除ボタンがクリックされたときに実行する関数を登録
+              deleteButton.addEventListener("click", function () {
+                todoItem.remove();
+              });
+    
+              // ToDoアイテムに要素を追加
+              todoItem.appendChild(todoTextElement);
+              todoItem.appendChild(deleteButton);
+    
+              // ToDoリストにToDoアイテムを追加
+              todoList.appendChild(todoItem);
+    
+              // 入力フィールドをクリア
+              todoInput.value = "";
+            }
+          }
+    
+          // フォームが送信されたときに実行する関数を登録
+          todoForm.addEventListener("submit", addTodoItem);
+        </script>
+      </body>
+    </html>
